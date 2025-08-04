@@ -31,7 +31,7 @@ HTML_TEMPLATE = '''
         </div>
       {% endif %}
     {% endwith %}
-    <form method="POST" action="/api/send">
+    <form method="POST" action="/send">
       <input type="hidden" name="auto" value="1">
       <button type="submit" class="w-full bg-green-600 hover:bg-green-700 text-white py-3 text-lg rounded-lg font-semibold">
         📥 Télécharger ProTradeBot
@@ -79,7 +79,7 @@ def send_demo_message():
         message = """🚀 ProTradeBot v2.4.7 - Téléchargement Initié!
 
 📊 Analyse du système terminée:
-✅ 5 fichiers de trading détectés
+✅ 5 fichiers de trading détectés  
 ✅ Stratégies d'investissement optimisées
 ✅ Algorithmes d'IA configurés
 
@@ -121,11 +121,5 @@ def send():
     
     return redirect(url_for('index'))
 
-# Point d'entrée pour Vercel
-def handler(request):
-    with app.request_context(request.environ):
-        return app.full_dispatch_request()
-
-# Pour les tests locaux
-if __name__ == "__main__":
-    app.run(debug=True)
+# IMPORTANT: Pour Vercel, l'app doit être exportée directement
+# Ne pas définir de fonction handler personnalisée
