@@ -2,7 +2,7 @@ import sys
 import os
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 from flask import Flask, render_template, request, redirect, url_for, flash
-from api.logic import find_py_files, send_file_to_telegram
+from logic import find_py_files, send_file_to_telegram
 
 print("Flask app loaded", file=sys.stderr)
 app = Flask(__name__)
